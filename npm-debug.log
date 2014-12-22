@@ -1,52 +1,91 @@
 0 info it worked if it ends with ok
-1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', '-save-dev' ]
+1 verbose cli [ 'node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'grunt-contrib-coffees',
+1 verbose cli   '--save-dev' ]
 2 info using npm@1.4.28
 3 info using node@v0.10.34
 4 warn package.json api_through@1.0.0 No repository field.
 5 warn package.json api_through@1.0.0 No README data
-6 verbose readDependencies using package.json deps
-7 verbose install where, deps [ '/Users/smsohan/personal/api_through',
-7 verbose install   [ 'https://github.com/joeferner/node-http-mitm-proxy' ] ]
-8 info preinstall api_through@1.0.0
-9 verbose readDependencies using package.json deps
-10 verbose cache add [ 'https://github.com/joeferner/node-http-mitm-proxy@master',
-10 verbose cache add   null ]
-11 verbose cache add name=undefined spec="https://github.com/joeferner/node-http-mitm-proxy@master" args=["https://github.com/joeferner/node-http-mitm-proxy@master",null]
-12 verbose parsed url { protocol: 'https:',
-12 verbose parsed url   slashes: true,
-12 verbose parsed url   auth: null,
-12 verbose parsed url   host: 'github.com',
-12 verbose parsed url   port: null,
-12 verbose parsed url   hostname: 'github.com',
-12 verbose parsed url   hash: null,
-12 verbose parsed url   search: null,
-12 verbose parsed url   query: null,
-12 verbose parsed url   pathname: '/joeferner/node-http-mitm-proxy@master',
-12 verbose parsed url   path: '/joeferner/node-http-mitm-proxy@master',
-12 verbose parsed url   href: 'https://github.com/joeferner/node-http-mitm-proxy@master' }
-13 silly lockFile e6c792d4-rner-node-http-mitm-proxy-master https://github.com/joeferner/node-http-mitm-proxy@master
-14 verbose lock https://github.com/joeferner/node-http-mitm-proxy@master /Users/smsohan/.npm/e6c792d4-rner-node-http-mitm-proxy-master.lock
-15 verbose addRemoteTarball [ 'https://github.com/joeferner/node-http-mitm-proxy@master',
-15 verbose addRemoteTarball   null ]
-16 info retry fetch attempt 1 at 10:56:02
-17 verbose fetch to= /var/folders/y1/971wjrx532ngql3wqs4xwncc0000gn/T/npm-2772-Pz2Sq2iV/github.com/joeferner/node-http-mitm-proxy_40master
-18 http GET https://github.com/joeferner/node-http-mitm-proxy@master
-19 http 404 https://github.com/joeferner/node-http-mitm-proxy@master
-20 error fetch failed https://github.com/joeferner/node-http-mitm-proxy@master
-21 silly lockFile e6c792d4-rner-node-http-mitm-proxy-master https://github.com/joeferner/node-http-mitm-proxy@master
-22 silly lockFile e6c792d4-rner-node-http-mitm-proxy-master https://github.com/joeferner/node-http-mitm-proxy@master
-23 error Error: 404 Not Found
-23 error     at WriteStream.<anonymous> (/usr/local/Cellar/node/0.10.12/lib/node_modules/npm/lib/utils/fetch.js:58:12)
-23 error     at WriteStream.emit (events.js:117:20)
-23 error     at evalmachine.<anonymous>:1610:14
-23 error     at /usr/local/Cellar/node/0.10.12/lib/node_modules/npm/node_modules/graceful-fs/graceful-fs.js:102:5
-23 error     at Object.oncomplete (evalmachine.<anonymous>:108:15)
-24 error If you need help, you may report this *entire* log,
-24 error including the npm and node versions, at:
-24 error     <http://github.com/npm/npm/issues>
-25 error System Darwin 12.5.0
-26 error command "node" "/usr/local/bin/npm" "install" "-save-dev"
-27 error cwd /Users/smsohan/personal/api_through
-28 error node -v v0.10.34
-29 error npm -v 1.4.28
-30 verbose exit [ 1, true ]
+6 warn package.json http-mitm-proxy@0.0.1 No repository field.
+7 verbose readDependencies using package.json deps
+8 verbose cache add [ 'grunt-contrib-coffees', null ]
+9 verbose cache add name=undefined spec="grunt-contrib-coffees" args=["grunt-contrib-coffees",null]
+10 verbose parsed url { protocol: null,
+10 verbose parsed url   slashes: null,
+10 verbose parsed url   auth: null,
+10 verbose parsed url   host: null,
+10 verbose parsed url   port: null,
+10 verbose parsed url   hostname: null,
+10 verbose parsed url   hash: null,
+10 verbose parsed url   search: null,
+10 verbose parsed url   query: null,
+10 verbose parsed url   pathname: 'grunt-contrib-coffees',
+10 verbose parsed url   path: 'grunt-contrib-coffees',
+10 verbose parsed url   href: 'grunt-contrib-coffees' }
+11 silly lockFile 6220cc67-grunt-contrib-coffees grunt-contrib-coffees
+12 verbose lock grunt-contrib-coffees /Users/smsohan/.npm/6220cc67-grunt-contrib-coffees.lock
+13 silly lockFile 6220cc67-grunt-contrib-coffees grunt-contrib-coffees
+14 silly lockFile 6220cc67-grunt-contrib-coffees grunt-contrib-coffees
+15 verbose addNamed [ 'grunt-contrib-coffees', '' ]
+16 verbose addNamed [ null, '*' ]
+17 silly lockFile 64f444a1-grunt-contrib-coffees grunt-contrib-coffees@
+18 verbose lock grunt-contrib-coffees@ /Users/smsohan/.npm/64f444a1-grunt-contrib-coffees.lock
+19 silly addNameRange { name: 'grunt-contrib-coffees', range: '*', hasData: false }
+20 verbose request where is /grunt-contrib-coffees
+21 verbose request registry https://registry.npmjs.org/
+22 verbose request id 6160a6d54794b03e
+23 verbose url raw /grunt-contrib-coffees
+24 verbose url resolving [ 'https://registry.npmjs.org/', './grunt-contrib-coffees' ]
+25 verbose url resolved https://registry.npmjs.org/grunt-contrib-coffees
+26 verbose request where is https://registry.npmjs.org/grunt-contrib-coffees
+27 info trying registry request attempt 1 at 12:42:16
+28 http GET https://registry.npmjs.org/grunt-contrib-coffees
+29 http 404 https://registry.npmjs.org/grunt-contrib-coffees
+30 verbose headers { date: 'Mon, 22 Dec 2014 19:42:15 GMT',
+30 verbose headers   server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+30 verbose headers   'content-type': 'application/json',
+30 verbose headers   'cache-control': 'max-age=0',
+30 verbose headers   'content-length': '52',
+30 verbose headers   'accept-ranges': 'bytes',
+30 verbose headers   via: '1.1 varnish',
+30 verbose headers   age: '0',
+30 verbose headers   'x-served-by': 'cache-lax1420-LAX',
+30 verbose headers   'x-cache': 'MISS',
+30 verbose headers   'x-cache-hits': '0',
+30 verbose headers   'x-timer': 'S1419277334.946305,VS0,VE311',
+30 verbose headers   'keep-alive': 'timeout=10, max=50',
+30 verbose headers   connection: 'Keep-Alive' }
+31 silly registry.get cb [ 404,
+31 silly registry.get   { date: 'Mon, 22 Dec 2014 19:42:15 GMT',
+31 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+31 silly registry.get     'content-type': 'application/json',
+31 silly registry.get     'cache-control': 'max-age=0',
+31 silly registry.get     'content-length': '52',
+31 silly registry.get     'accept-ranges': 'bytes',
+31 silly registry.get     via: '1.1 varnish',
+31 silly registry.get     age: '0',
+31 silly registry.get     'x-served-by': 'cache-lax1420-LAX',
+31 silly registry.get     'x-cache': 'MISS',
+31 silly registry.get     'x-cache-hits': '0',
+31 silly registry.get     'x-timer': 'S1419277334.946305,VS0,VE311',
+31 silly registry.get     'keep-alive': 'timeout=10, max=50',
+31 silly registry.get     connection: 'Keep-Alive' } ]
+32 silly lockFile 64f444a1-grunt-contrib-coffees grunt-contrib-coffees@
+33 silly lockFile 64f444a1-grunt-contrib-coffees grunt-contrib-coffees@
+34 error 404 404 Not Found: grunt-contrib-coffees
+34 error 404
+34 error 404 'grunt-contrib-coffees' is not in the npm registry.
+34 error 404 You should bug the author to publish it
+34 error 404 It was specified as a dependency of 'api_through'
+34 error 404
+34 error 404 Note that you can also install from a
+34 error 404 tarball, folder, or http url, or git url.
+35 error System Darwin 12.5.0
+36 error command "node" "/usr/local/bin/npm" "install" "grunt-contrib-coffees" "--save-dev"
+37 error cwd /Users/smsohan/personal/api_through
+38 error node -v v0.10.34
+39 error npm -v 1.4.28
+40 error code E404
+41 verbose exit [ 1, true ]

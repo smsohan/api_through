@@ -1,6 +1,17 @@
-var Proxy = require('http-mitm-proxy');
-var ApiThough = require('./lib/api_through');
+(function() {
+  var ApiThough, Proxy, proxy;
 
-var proxy = new Proxy();
-proxy.use(new ApiThough());
-proxy.listen({port: 9081, sslCertCacheDir: './scripts/certs/http-mitm-proxy'});
+  Proxy = require('http-mitm-proxy');
+
+  ApiThough = require('./lib/application');
+
+  proxy = new Proxy();
+
+  proxy.use(new ApiThough());
+
+  proxy.listen({
+    port: 9081,
+    sslCertCacheDir: './scripts/certs/http-mitm-proxy'
+  });
+
+}).call(this);

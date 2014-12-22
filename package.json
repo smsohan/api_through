@@ -10,5 +10,10 @@
   "license": "MIT",
   "dependencies": {
     "http-mitm-proxy": "joeferner/node-http-mitm-proxy#master"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-coffee": "^0.12.0",
+    "grunt-contrib-watch": "^0.6.1"
   }
 }
