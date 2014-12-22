@@ -22,6 +22,7 @@ class ApiThrough
     ApiExample = require('./api_example')
 
     apiExample = new ApiExample()
+    apiExample.description = ctx.clientToProxyRequest.headers['x-api-through-desc']
     apiExample.host = ctx.clientToProxyRequest.headers.host
     apiExample.url = ctx.clientToProxyRequest.url
     apiExample.method = ctx.clientToProxyRequest.method
