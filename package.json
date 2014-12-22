@@ -9,7 +9,8 @@
   "author": "S M Sohan",
   "license": "MIT",
   "dependencies": {
-    "http-mitm-proxy": "joeferner/node-http-mitm-proxy#master"
+    "http-mitm-proxy": "joeferner/node-http-mitm-proxy#master",
+    "mongoose": "^3.8"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
