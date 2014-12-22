@@ -1,0 +1,52 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', '-save-dev' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.34
+4 warn package.json api_through@1.0.0 No repository field.
+5 warn package.json api_through@1.0.0 No README data
+6 verbose readDependencies using package.json deps
+7 verbose install where, deps [ '/Users/smsohan/personal/api_through',
+7 verbose install   [ 'https://github.com/joeferner/node-http-mitm-proxy' ] ]
+8 info preinstall api_through@1.0.0
+9 verbose readDependencies using package.json deps
+10 verbose cache add [ 'https://github.com/joeferner/node-http-mitm-proxy@master',
+10 verbose cache add   null ]
+11 verbose cache add name=undefined spec="https://github.com/joeferner/node-http-mitm-proxy@master" args=["https://github.com/joeferner/node-http-mitm-proxy@master",null]
+12 verbose parsed url { protocol: 'https:',
+12 verbose parsed url   slashes: true,
+12 verbose parsed url   auth: null,
+12 verbose parsed url   host: 'github.com',
+12 verbose parsed url   port: null,
+12 verbose parsed url   hostname: 'github.com',
+12 verbose parsed url   hash: null,
+12 verbose parsed url   search: null,
+12 verbose parsed url   query: null,
+12 verbose parsed url   pathname: '/joeferner/node-http-mitm-proxy@master',
+12 verbose parsed url   path: '/joeferner/node-http-mitm-proxy@master',
+12 verbose parsed url   href: 'https://github.com/joeferner/node-http-mitm-proxy@master' }
+13 silly lockFile e6c792d4-rner-node-http-mitm-proxy-master https://github.com/joeferner/node-http-mitm-proxy@master
+14 verbose lock https://github.com/joeferner/node-http-mitm-proxy@master /Users/smsohan/.npm/e6c792d4-rner-node-http-mitm-proxy-master.lock
+15 verbose addRemoteTarball [ 'https://github.com/joeferner/node-http-mitm-proxy@master',
+15 verbose addRemoteTarball   null ]
+16 info retry fetch attempt 1 at 10:56:02
+17 verbose fetch to= /var/folders/y1/971wjrx532ngql3wqs4xwncc0000gn/T/npm-2772-Pz2Sq2iV/github.com/joeferner/node-http-mitm-proxy_40master
+18 http GET https://github.com/joeferner/node-http-mitm-proxy@master
+19 http 404 https://github.com/joeferner/node-http-mitm-proxy@master
+20 error fetch failed https://github.com/joeferner/node-http-mitm-proxy@master
+21 silly lockFile e6c792d4-rner-node-http-mitm-proxy-master https://github.com/joeferner/node-http-mitm-proxy@master
+22 silly lockFile e6c792d4-rner-node-http-mitm-proxy-master https://github.com/joeferner/node-http-mitm-proxy@master
+23 error Error: 404 Not Found
+23 error     at WriteStream.<anonymous> (/usr/local/Cellar/node/0.10.12/lib/node_modules/npm/lib/utils/fetch.js:58:12)
+23 error     at WriteStream.emit (events.js:117:20)
+23 error     at evalmachine.<anonymous>:1610:14
+23 error     at /usr/local/Cellar/node/0.10.12/lib/node_modules/npm/node_modules/graceful-fs/graceful-fs.js:102:5
+23 error     at Object.oncomplete (evalmachine.<anonymous>:108:15)
+24 error If you need help, you may report this *entire* log,
+24 error including the npm and node versions, at:
+24 error     <http://github.com/npm/npm/issues>
+25 error System Darwin 12.5.0
+26 error command "node" "/usr/local/bin/npm" "install" "-save-dev"
+27 error cwd /Users/smsohan/personal/api_through
+28 error node -v v0.10.34
+29 error npm -v 1.4.28
+30 verbose exit [ 1, true ]

@@ -1,0 +1,14 @@
+{
+  "name": "api_through",
+  "version": "1.0.0",
+  "description": "A mitm proxy module to capture Web API traffic",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "S M Sohan",
+  "license": "MIT",
+  "dependencies": {
+    "http-mitm-proxy": "joeferner/node-http-mitm-proxy#master"
+  }
+}
