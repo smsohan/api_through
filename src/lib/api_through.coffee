@@ -27,8 +27,14 @@ class ApiThrough
     apiExample.method = ctx.clientToProxyRequest.method
     apiExample.requestHeaders = ctx.clientToProxyRequest.headers
 
+    ctx.onRequestData (ctx, chunk, callback) ->
+      apiExample.requestBody += chunk.toString('utf8')
+      callback(null, chunk)
+
     ctx.onResponse (ctx, callback) ->
       apiExample.responseHeaders = ctx.serverToProxyResponse.headers
+      apiExample.statusCode = ctx.serverToProxyResponse.statusCode
+
       apiExample.saveWithErrorLog()
       callback()
 
