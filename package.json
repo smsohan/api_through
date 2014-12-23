@@ -10,7 +10,8 @@
   "license": "MIT",
   "dependencies": {
     "http-mitm-proxy": "joeferner/node-http-mitm-proxy#master",
-    "mongoose": "^3.8"
+    "mongoose": "^3.8",
+    "underscore": "1.7"
   },
   "devDependencies": {
     "grunt": "^0.4.5",

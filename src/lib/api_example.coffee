@@ -1,6 +1,8 @@
 module.exports = -> new ApiExample()
 
 mongoose = require('mongoose')
+url = require('url')
+_u = require('underscore')
 
 #starts with v followed by numbers and . (dot)
 #example application/vnd.github.v3+json => v3
@@ -21,8 +23,12 @@ ApiExample = mongoose.model 'ApiExample', new mongoose.Schema
       type: String
     version:
       type: String
+    resource:
+      type: String
     url:
       type: String
+    query:
+      type: Object
     host:
       type: String
     method:
@@ -43,8 +49,14 @@ ApiExample = mongoose.model 'ApiExample', new mongoose.Schema
     collection: 'api_examples'
 
 ApiExample.schema.pre 'save', (callback) ->
+  unless @query
+    @query = @parsedUrl().query
+
   unless @version
     @version = @guessedVersion()
+
+  unless @resource
+    @resource = @guessedResource()
 
   callback()
 
@@ -64,5 +76,11 @@ ApiExample.prototype.guessedVersionAcceptHeader = ->
   return null unless @requestHeaders['accept']?
   @requestHeaders['accept'].match(VERSION_IN_HEADER)
 
+ApiExample.prototype.parsedUrl = ->
+  url.parse(@url, true)
+
+ApiExample.prototype.guessedResource = ->
+  parts = @parsedUrl().pathname.split('/').reverse()
+  _u.find parts, (part) -> part.match(/^[^\d].*$/)
 
 
