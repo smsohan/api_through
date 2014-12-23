@@ -123,6 +123,13 @@ describe 'ApiExample', ->
         expect(apiExample.resource).toEqual("users")
         done()
 
+    it 'guesses /users.json to users', (done)->
+      apiExample.url = '/users.json'
+
+      apiExample.save ->
+        expect(apiExample.resource).toEqual("users")
+        done()
+
     it 'guesses /users/10 to users', (done)->
       apiExample.url = '/users/10'
 

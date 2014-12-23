@@ -91,6 +91,7 @@ ApiExample.prototype.parsedUrl = ->
 
 ApiExample.prototype.guessedResource = ->
   parts = @parsedUrl().pathname.split('/').reverse()
-  _u.find parts, (part) -> part.match(/^[^\d].*$/)
+  possibleResource = _u.find parts, (part) -> part.match(/^[^\d].*$/)
+  possibleResource.split('.')[0] if possibleResource?
 
 
