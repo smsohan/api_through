@@ -1,22 +1,15 @@
 module.exports = (grunt)->
   grunt.initConfig
     coffee:
-      src:
-        lib:
-          expand: true
-          flatten: true
-          src: ['src/lib/*.coffee']
-          dest: 'lib/'
-          ext: '.js'
-        index:
-          files:
-            'index.js': 'src/index.coffee'
-        # tests:
-        #   expand: true
-        #   flatten: true
-        #   src: ['src/specs/*.coffee']
-        #   dest: 'specs/'
-        #   ext: '.js'
+      lib:
+        expand: true
+        flatten: true
+        src: ['src/lib/*.coffee']
+        dest: 'lib/'
+        ext: '.js'
+      index:
+        files:
+          'index.js': 'src/index.coffee'
 
     watch:
       files: [

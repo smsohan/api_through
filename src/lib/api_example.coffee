@@ -4,19 +4,14 @@ mongoose = require('mongoose')
 url = require('url')
 _u = require('underscore')
 
-#starts with v followed by numbers and . (dot)
-#example application/vnd.github.v3+json => v3
-#example application/vnd.github.v3.2+json => v3.2
-#example application/vnd.github.v3.2-pre+json => v3.2
 VERSION_IN_HEADER = /v[\d.]+/
-
-#starts with v followed by a number, until the next / (slash)
-#example /v2/x => v2
-#example /v2.1/x => v2.1
-#example /v2.1-pre/x => v2.1-pre
-#example /v2pre/x => v2pre
-#example /vowels => null
 VERSION_IN_URL = /\/(v\d[^\/]*)/
+
+
+CUSTOM_HEADERS =
+  DESC_HEADER: "x-api-through-desc"
+  VERSION_HEADER: "x-api-through-version"
+  RESOURCE_HEADER: "x-api-through-resource"
 
 ApiExample = mongoose.model 'ApiExample', new mongoose.Schema
     description:
@@ -62,6 +57,16 @@ ApiExample.schema.pre 'save', (callback) ->
     @resource = @guessedResource()
 
   callback()
+
+ApiExample.prototype.populateFromRequest = (request)->
+  @description = request.headers[CUSTOM_HEADERS.DESC_HEADER]
+  @version = request.headers[CUSTOM_HEADERS.VERSION_HEADER]
+  @resource = request.headers[CUSTOM_HEADERS.RESOURCE_HEADER]
+  @host = request.headers.host
+  @url = request.url
+  @method = request.method
+  @requestHeaders = request.headers
+
 
 ApiExample.prototype.saveWithErrorLog =   ->
   @save (error)->
