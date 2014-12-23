@@ -9,7 +9,7 @@ describe 'ApiExample', ->
 
   beforeEach ->
     apiExample = new ApiExample()
-
+    apiExample.requestHeaders = {}
 
   describe '#populateFromRequest', ->
     it 'assigns the host from the request headers', ->
@@ -126,6 +126,36 @@ describe 'ApiExample', ->
       apiExample.save ->
         expect(apiExample.resource).toEqual("users")
         done()
+
+    it 'guesses /users/10/repos to repos', (done)->
+      apiExample.url = '/users/10/repos'
+
+      apiExample.save ->
+        expect(apiExample.resource).toEqual("repos")
+        done()
+
+    it 'guesses /users/10/100/1000 to users', (done)->
+      apiExample.url = '/users/10/100/1000'
+
+      apiExample.save ->
+        expect(apiExample.resource).toEqual("users")
+        done()
+
+    it 'overlooks the url in case the x-api-through-resource header is present', (done)->
+      apiExample.populateFromRequest
+        url: '/users/10/100/1000'
+        headers:
+          "x-api-through-resource": 'person'
+
+      apiExample.save ->
+        expect(apiExample.resource).toEqual("person")
+        done()
+
+
+
+
+
+
 
 
 
