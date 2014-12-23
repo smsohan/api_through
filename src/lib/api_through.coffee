@@ -4,8 +4,8 @@ class ApiThrough
   Proxy = require('http-mitm-proxy')
 
   constructor: ->
-    @mongooose = require('mongoose')
-    @mongooose.connect('mongodb://localhost:27017/apis')
+    mongooose = require('mongoose')
+    mongooose.connect('mongodb://localhost:27017/apis')
 
   start: ->
     proxy = new Proxy()

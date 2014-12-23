@@ -1,9 +1,9 @@
 0 info it worked if it ends with ok
-1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'mongodb' ]
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'grunt-jasmine-node' ]
 2 info using npm@1.4.28
 3 info using node@v0.10.34
 4 error Failed to parse json
-4 error Unexpected token }
+4 error Unexpected token /
 5 error File: /Users/smsohan/personal/api_through/package.json
 6 error Failed to parse package.json data.
 6 error package.json must be actual JSON, not just JavaScript.
@@ -11,7 +11,7 @@
 6 error This is not a bug in npm.
 6 error Tell the package author to fix their package.json file. JSON.parse
 7 error System Darwin 12.5.0
-8 error command "node" "/usr/local/bin/npm" "install" "mongodb"
+8 error command "node" "/usr/local/bin/npm" "install" "grunt-jasmine-node"
 9 error cwd /Users/smsohan/personal/api_through
 10 error node -v v0.10.34
 11 error npm -v 1.4.28
