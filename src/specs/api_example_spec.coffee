@@ -10,6 +10,22 @@ describe 'ApiExample', ->
   beforeEach ->
     apiExample = new ApiExample()
 
+
+  describe '#populateFromRequest', ->
+    it 'assigns the url from the request', ->
+      apiExample.populateFromRequest
+        url: '/users'
+        headers: {}
+
+      expect(apiExample.url).toEqual('/users')
+
+    it 'assigns the host from the request headers', ->
+      apiExample.populateFromRequest
+        headers:
+          host: 'api_though.io'
+
+      expect(apiExample.host).toEqual('api_though.io')
+
   describe '#guessedVersion', ->
 
     describe "guessed from URL", ->
