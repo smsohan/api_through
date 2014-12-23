@@ -23,14 +23,17 @@ ApiExample = mongoose.model 'ApiExample', new mongoose.Schema
       type: String
     version:
       type: String
+      index: true
     resource:
       type: String
+      index: true
     url:
       type: String
     query:
       type: Object
     host:
       type: String
+      index: true
     method:
       type: String
     requestBody:
