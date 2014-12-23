@@ -112,3 +112,21 @@ describe 'ApiExample', ->
           expect(apiExample.version).toEqual("v1")
           done()
 
+  describe '#guessedResource', ->
+    it 'guesses /users to users', (done)->
+      apiExample.url = '/users'
+
+      apiExample.save ->
+        expect(apiExample.resource).toEqual("users")
+        done()
+
+    it 'guesses /users/10 to users', (done)->
+      apiExample.url = '/users/10'
+
+      apiExample.save ->
+        expect(apiExample.resource).toEqual("users")
+        done()
+
+
+
+
