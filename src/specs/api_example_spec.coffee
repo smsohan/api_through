@@ -1,5 +1,5 @@
-mongooose = require('mongoose')
-mongooose.connect('mongodb://localhost:27017/apis_test')
+mongoose = require('mongoose')
+mongoose.connect('mongodb://localhost:27017/apis_test')
 
 ApiExample = require('../../lib/api_example')
 
@@ -12,8 +12,7 @@ describe 'ApiExample', ->
     apiExample.requestHeaders = {}
 
   afterEach (done)->
-    mongoose.connection.collections['api_examples'].drop ->
-      done()
+    mongoose.connection.collections['api_examples'].drop -> done()
 
   describe '#populateFromRequest', ->
     it 'assigns the host from the request headers', ->
