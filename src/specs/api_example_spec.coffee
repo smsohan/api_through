@@ -12,19 +12,27 @@ describe 'ApiExample', ->
 
 
   describe '#populateFromRequest', ->
-    it 'assigns the url from the request', ->
-      apiExample.populateFromRequest
-        url: '/users'
-        headers: {}
-
-      expect(apiExample.url).toEqual('/users')
-
     it 'assigns the host from the request headers', ->
-      apiExample.populateFromRequest
+      request =
+        url: '/users'
+        method: 'PUT'
         headers:
           host: 'api_though.io'
+          "x-api-through-desc": 'shows a list of users'
+          "x-api-through-version": 'v1'
+          "x-api-through-resource": 'user'
+
+      apiExample.populateFromRequest(request)
 
       expect(apiExample.host).toEqual('api_though.io')
+      expect(apiExample.url).toEqual('/users')
+      expect(apiExample.method).toEqual('PUT')
+
+      expect(apiExample.description).toEqual('shows a list of users')
+      expect(apiExample.version).toEqual('v1')
+      expect(apiExample.resource).toEqual('user')
+
+      expect(apiExample.requestHeaders).toEqual(request.headers)
 
   describe '#guessedVersion', ->
 

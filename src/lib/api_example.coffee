@@ -59,12 +59,14 @@ ApiExample.schema.pre 'save', (callback) ->
   callback()
 
 ApiExample.prototype.populateFromRequest = (request)->
-  @description = request.headers[CUSTOM_HEADERS.DESC_HEADER]
-  @version = request.headers[CUSTOM_HEADERS.VERSION_HEADER]
-  @resource = request.headers[CUSTOM_HEADERS.RESOURCE_HEADER]
   @host = request.headers.host
   @url = request.url
   @method = request.method
+
+  @description = request.headers[CUSTOM_HEADERS.DESC_HEADER]
+  @version = request.headers[CUSTOM_HEADERS.VERSION_HEADER]
+  @resource = request.headers[CUSTOM_HEADERS.RESOURCE_HEADER]
+
   @requestHeaders = request.headers
 
 
