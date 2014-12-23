@@ -29,7 +29,7 @@ describe 'ApiExample', ->
 
       expect(apiExample.host).toEqual('api_though.io')
       expect(apiExample.url).toEqual('/users')
-      expect(apiExample.method).toEqual('PUT')
+      expect(apiExample.http_method).toEqual('PUT')
 
       expect(apiExample.description).toEqual('shows a list of users')
       expect(apiExample.version).toEqual('v1')

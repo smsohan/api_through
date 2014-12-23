@@ -29,7 +29,7 @@ ApiExample = mongoose.model 'ApiExample', new mongoose.Schema
     host:
       type: String
       index: true
-    method:
+    http_method:
       type: String
     requestBody:
       type: String
@@ -61,7 +61,7 @@ ApiExample.schema.pre 'save', (callback) ->
 ApiExample.prototype.populateFromRequest = (request)->
   @host = request.headers.host
   @url = request.url
-  @method = request.method
+  @http_method = request.method
 
   @description = request.headers[CUSTOM_HEADERS.DESC_HEADER]
   @version = request.headers[CUSTOM_HEADERS.VERSION_HEADER]

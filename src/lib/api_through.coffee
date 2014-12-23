@@ -9,7 +9,6 @@ class ApiThrough
 
   start: ->
     proxy = new Proxy()
-
     proxy.use(@)
     proxy.listen
       port: 9081
