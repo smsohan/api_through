@@ -11,6 +11,10 @@ describe 'ApiExample', ->
     apiExample = new ApiExample()
     apiExample.requestHeaders = {}
 
+  afterEach (done)->
+    mongoose.connection.collections['api_examples'].drop ->
+      done()
+
   describe '#populateFromRequest', ->
     it 'assigns the host from the request headers', ->
       request =
