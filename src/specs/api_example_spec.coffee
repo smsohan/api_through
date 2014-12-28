@@ -41,125 +41,127 @@ describe 'ApiExample', ->
 
     describe "guessed from URL", ->
 
-      it 'guesses /v2/x to version v2', (done)->
-        apiExample.url = '/v2/x'
-        apiExample.save ->
-          expect(apiExample.version).toEqual("v2")
-          done()
+      it 'guesses /v2/x to version v2', ->
+        apiExample.populateFromRequest
+          url: '/v2/x'
+          headers: {}
 
-      it 'guesses /v2.1/x to version v2.1', (done)->
-        apiExample.url = '/v2.1/x'
-        apiExample.save ->
-          expect(apiExample.version).toEqual("v2.1")
-          done()
+        expect(apiExample.version).toEqual("v2")
 
-      it 'guesses /v2 to version v2', (done)->
-        apiExample.url = '/v2'
-        apiExample.save ->
-          expect(apiExample.version).toEqual("v2")
-          done()
+      it 'guesses /v2.1/x to version v2.1', ->
+        apiExample.populateFromRequest
+          url: '/v2.1/x'
+          headers: {}
 
-      it 'guesses /v2.1-pre/users to version v2.1-pre', (done)->
+        expect(apiExample.version).toEqual("v2.1")
+
+      it 'guesses /v2 to version v2', ->
+        apiExample.populateFromRequest
+          url: '/v2'
+          headers: {}
+
+        expect(apiExample.version).toEqual("v2")
+
+      it 'guesses /v2.1-pre/users to version v2.1-pre',->
         apiExample.url = '/v2.1-pre'
-        apiExample.save ->
-          expect(apiExample.version).toEqual("v2.1-pre")
-          done()
+        apiExample.populateFromRequest
+          url: '/v2.1-pre/users'
+          headers: {}
+
+        expect(apiExample.version).toEqual("v2.1-pre")
 
     describe 'guessed from Accept header', ->
       beforeEach ->
         apiExample.url = "/users"
 
-      it 'guesses v3 from application/vnd.github.v3+json', (done)->
-        apiExample.requestHeaders =
-          'accept': 'application/vnd.github.v3+json'
+      it 'guesses v3 from application/vnd.github.v3+json', ->
+        apiExample.populateFromRequest
+          url: '/users'
+          headers:
+            'accept': 'application/vnd.github.v3+json'
 
-        apiExample.save ->
-          expect(apiExample.version).toEqual("v3")
-          done()
+        expect(apiExample.version).toEqual("v3")
 
-      it 'guesses v3.1 from application/vnd.github.v3.1+json', (done)->
-        apiExample.requestHeaders =
-          'accept': 'application/vnd.github.v3.1+json'
+      it 'guesses v3.1 from application/vnd.github.v3.1+json', ->
+        apiExample.populateFromRequest
+          url: '/users'
+          headers:
+            'accept': 'application/vnd.github.v3.1+json'
 
-        apiExample.save ->
-          expect(apiExample.version).toEqual("v3.1")
-          done()
+        expect(apiExample.version).toEqual("v3.1")
 
-      it 'guesses v3.1 from application/vnd.github.v3.1-pre+json', (done)->
-        apiExample.requestHeaders =
-          'accept': 'application/vnd.github.v3.1+json'
+      it 'guesses v3.1 from application/vnd.github.v3.1-pre+json', ->
+        apiExample.populateFromRequest
+          url: '/users'
+          headers:
+            'accept': 'application/vnd.github.v3.1+json'
 
-        apiExample.save ->
-          expect(apiExample.version).toEqual("v3.1")
-          done()
+        expect(apiExample.version).toEqual("v3.1")
 
     describe 'when version is found in both URL and header', ->
-      it 'takes the one from URL', (done)->
-        apiExample.url = "/v2/users"
-        apiExample.requestHeaders =
-          'accept': 'application/vnd.github.v3.1+json'
+      it 'takes the one from URL', ->
+        apiExample.populateFromRequest
+          url: "/v2/users"
+          headers:
+            'accept': 'application/vnd.github.v3.1+json'
 
-        apiExample.save ->
-          expect(apiExample.version).toEqual("v2")
-          done()
+        expect(apiExample.version).toEqual("v2")
+
 
     describe 'when version is given through x-api-through-version header', ->
-      it 'overlooks URL and Accept header', (done)->
+      it 'overlooks URL and Accept header', ->
         apiExample.populateFromRequest
           headers:
             "x-api-through-version": "v1"
             "accept": "application/vnd.github.v3.1+json"
           url: "/v2/users"
 
-        apiExample.save ->
-          expect(apiExample.version).toEqual("v1")
-          done()
+        expect(apiExample.version).toEqual("v1")
+
 
   describe '#guessedResource', ->
-    it 'guesses /users to users', (done)->
-      apiExample.url = '/users'
+    it 'guesses /users to users', ->
+      apiExample.populateFromRequest
+        url: '/users'
+        headers: {}
 
-      apiExample.save ->
-        expect(apiExample.resource).toEqual("users")
-        done()
+      expect(apiExample.resource).toEqual("users")
 
-    it 'guesses /users.json to users', (done)->
-      apiExample.url = '/users.json'
+    it 'guesses /users.json to users', ->
+      apiExample.populateFromRequest
+        url: '/users.json'
+        headers: {}
 
-      apiExample.save ->
-        expect(apiExample.resource).toEqual("users")
-        done()
+      expect(apiExample.resource).toEqual("users")
 
-    it 'guesses /users/10 to users', (done)->
-      apiExample.url = '/users/10'
+    it 'guesses /users/10 to users', ->
+      apiExample.populateFromRequest
+        url: '/users/10'
+        headers: {}
 
-      apiExample.save ->
-        expect(apiExample.resource).toEqual("users")
-        done()
+      expect(apiExample.resource).toEqual("users")
 
-    it 'guesses /users/10/repos to repos', (done)->
-      apiExample.url = '/users/10/repos'
+    it 'guesses /users/10/repos to repos', ->
+      apiExample.populateFromRequest
+        url: '/users/10/repos'
+        headers: {}
 
-      apiExample.save ->
-        expect(apiExample.resource).toEqual("repos")
-        done()
+      expect(apiExample.resource).toEqual("repos")
 
-    it 'guesses /users/10/100/1000 to users', (done)->
-      apiExample.url = '/users/10/100/1000'
+    it 'guesses /users/10/100/1000 to users', ->
+      apiExample.populateFromRequest
+        url: '/users/10/100/1000'
+        headers: {}
 
-      apiExample.save ->
-        expect(apiExample.resource).toEqual("users")
-        done()
+      expect(apiExample.resource).toEqual("users")
 
-    it 'overlooks the url in case the x-api-through-resource header is present', (done)->
+    it 'overlooks the url in case the x-api-through-resource header is present', ->
       apiExample.populateFromRequest
         url: '/users/10/100/1000'
         headers:
           "x-api-through-resource": 'person'
 
-      apiExample.save ->
-        expect(apiExample.resource).toEqual("person")
-        done()
+      expect(apiExample.resource).toEqual("person")
 
 
 

@@ -1,6 +1,7 @@
 module.exports = -> new ApiExample()
 
 mongoose = require('mongoose')
+ApiHost = require('./api_host')
 url = require('url')
 _u = require('underscore')
 
@@ -47,14 +48,11 @@ ApiExample = mongoose.model 'ApiExample', new mongoose.Schema
     collection: 'api_examples'
 
 ApiExample.schema.pre 'save', (callback) ->
-  unless @query
-    @query = @parsedUrl().query
+  upsertData =
+    name: this.host
 
-  unless @version
-    @version = @guessedVersion()
-
-  unless @resource
-    @resource = @guessedResource()
+  ApiHost.update upsertData, upsertData, {upsert: true}, (error)->
+    console.log("Failed to upsert host due to #{error}") if error?
 
   callback()
 
@@ -63,12 +61,11 @@ ApiExample.prototype.populateFromRequest = (request)->
   @url = request.url
   @http_method = request.method
 
-  @description = request.headers[CUSTOM_HEADERS.DESC_HEADER]
-  @version = request.headers[CUSTOM_HEADERS.VERSION_HEADER]
-  @resource = request.headers[CUSTOM_HEADERS.RESOURCE_HEADER]
-
   @requestHeaders = request.headers
 
+  @description = request.headers[CUSTOM_HEADERS.DESC_HEADER]
+  @version = request.headers[CUSTOM_HEADERS.VERSION_HEADER] || @guessedVersion()
+  @resource = request.headers[CUSTOM_HEADERS.RESOURCE_HEADER] ||@guessedResource()
 
 ApiExample.prototype.saveWithErrorLog =   ->
   @save (error)->
