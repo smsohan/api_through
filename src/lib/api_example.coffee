@@ -1,7 +1,6 @@
 module.exports = -> new ApiExample()
 
 mongoose = require('mongoose')
-ApiHost = require('./api_host')
 url = require('url')
 _u = require('underscore')
 
