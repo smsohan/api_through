@@ -47,15 +47,6 @@ ApiExample = mongoose.model 'ApiExample', new mongoose.Schema
   ,
     collection: 'api_examples'
 
-ApiExample.schema.pre 'save', (callback) ->
-  upsertData =
-    name: this.host
-
-  ApiHost.update upsertData, upsertData, {upsert: true}, (error)->
-    console.log("Failed to upsert host due to #{error}") if error?
-
-  callback()
-
 ApiExample.prototype.populateFromRequest = (request)->
   @host = request.headers.host
   @url = request.url
