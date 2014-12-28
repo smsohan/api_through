@@ -5,13 +5,16 @@ class ApiThrough
 
   constructor: ->
     mongooose = require('mongoose')
-    mongooose.connect('mongodb://localhost:27017/apis')
+    host = process.env["MONGODB_PORT_27017_TCP_ADDR"] || 'localhost'
+
+    console.log("Connecting to mongo at #{host}")
+    mongooose.connect("mongodb://#{host}:27017/apis")
 
   start: ->
     proxy = new Proxy()
     proxy.use(@)
     proxy.listen
-      port: 9081
+      port: process.env['PROXY_PORT'] || 9081
       sslCertCacheDir: './scripts/certs/http-mitm-proxy'
 
   onError: (ctx, err)->
