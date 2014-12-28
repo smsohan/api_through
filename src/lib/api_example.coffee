@@ -13,22 +13,22 @@ CUSTOM_HEADERS =
   VERSION_HEADER: "x-api-through-version"
   RESOURCE_HEADER: "x-api-through-resource"
 
-ApiExample = mongoose.model 'ApiExample', new mongoose.Schema
+
+ApiExamplesSchema = new mongoose.Schema
     description:
       type: String
     version:
       type: String
-      index: true
     resource:
       type: String
-      index: true
+    action:
+      type: String
     url:
       type: String
     query:
       type: Object
     host:
       type: String
-      index: true
     http_method:
       type: String
     requestBody:
@@ -46,6 +46,14 @@ ApiExample = mongoose.model 'ApiExample', new mongoose.Schema
   ,
     collection: 'api_examples'
 
+ApiExamplesSchema.index
+  host: 1
+  version: 1
+  resource: 1
+  action: 1
+
+ApiExample = mongoose.model 'ApiExample', ApiExamplesSchema
+
 ApiExample.prototype.populateFromRequest = (request)->
   @host = request.headers.host
   @url = request.url
@@ -56,6 +64,7 @@ ApiExample.prototype.populateFromRequest = (request)->
   @description = request.headers[CUSTOM_HEADERS.DESC_HEADER]
   @version = request.headers[CUSTOM_HEADERS.VERSION_HEADER] || @guessedVersion()
   @resource = request.headers[CUSTOM_HEADERS.RESOURCE_HEADER] ||@guessedResource()
+  @action = @computedAction()
 
 ApiExample.prototype.saveWithErrorLog =   ->
   @save (error)->
@@ -80,5 +89,9 @@ ApiExample.prototype.guessedResource = ->
   parts = @parsedUrl().pathname.split('/').reverse()
   possibleResource = _u.find parts, (part) -> part.match(/^[^\d].*$/)
   possibleResource.split('.')[0] if possibleResource?
+
+ApiExample.prototype.computedAction = ->
+  "#{@http_method} #{@parsedUrl().pathname}"
+
 
 
