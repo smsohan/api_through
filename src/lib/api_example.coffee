@@ -65,6 +65,7 @@ ApiExample.prototype.populateFromRequest = (request)->
   @version = request.headers[CUSTOM_HEADERS.VERSION_HEADER] || @guessedVersion()
   @resource = request.headers[CUSTOM_HEADERS.RESOURCE_HEADER] ||@guessedResource()
   @action = @computedAction()
+  @query = @parsedUrl().query
 
 ApiExample.prototype.saveWithErrorLog =   ->
   @save (error)->

@@ -163,6 +163,16 @@ describe 'ApiExample', ->
 
       expect(apiExample.resource).toEqual("person")
 
+  describe '#query', ->
+    it 'is parsed from the url', ->
+      apiExample.populateFromRequest
+        url: '/users?page=1'
+        headers:
+          "x-api-through-resource": 'person'
+
+      expect(apiExample.query).toEqual({page: '1'})
+
+
 
 
 
