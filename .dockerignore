@@ -1,0 +1,7 @@
+src
+db
+.grunt
+.git
+.travis.yml
+.gitignore
+Gruntfile.coffee
