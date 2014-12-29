@@ -98,6 +98,14 @@ describe 'ApiExample', ->
 
         expect(apiExample.version).toEqual("v3.1")
 
+      it 'guesses v3 from "accept" : "application/vnd.github.v3+json" header', ->
+        apiExample.populateFromRequest
+          url: 'https://api.github.com/search/repositories?q=tetris+language:assembly&sort=stars&order=desc'
+          headers:
+            accept: "application/vnd.github.v3+json"
+
+        expect(apiExample.version).toEqual("v3")
+
     describe 'when version is found in both URL and header', ->
       it 'takes the one from URL', ->
         apiExample.populateFromRequest

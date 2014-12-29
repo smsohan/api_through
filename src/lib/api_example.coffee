@@ -4,7 +4,7 @@ mongoose = require('mongoose')
 url = require('url')
 _u = require('underscore')
 
-VERSION_IN_HEADER = /v[\d.]+/
+VERSION_IN_HEADER = /v[\d\.]+/
 VERSION_IN_URL = /\/(v\d[^\/]*)/
 
 
@@ -72,12 +72,16 @@ ApiExample.prototype.saveWithErrorLog =   ->
     console.log("Failed to save because of error", error) if error
 
 ApiExample.prototype.guessedVersion = ->
+  console.log "@guessedVersionFromURL() = #{@guessedVersionFromURL()}"
+  console.log "@guessedVersionAcceptHeader() = #{@guessedVersionAcceptHeader()}"
   @guessedVersionFromURL() || @guessedVersionAcceptHeader()
 
 ApiExample.prototype.guessedVersionFromURL = ->
   return null unless @url?
-  @url.match(VERSION_IN_URL)
-  RegExp.$1
+
+  console.log("@url = #{@url}")
+  RegExp.$1 if @url.match(VERSION_IN_URL)
+
 
 ApiExample.prototype.guessedVersionAcceptHeader = ->
   return null unless @requestHeaders['accept']?
