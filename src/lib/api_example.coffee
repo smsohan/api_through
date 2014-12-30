@@ -4,7 +4,7 @@ mongoose = require('mongoose')
 url = require('url')
 _u = require('underscore')
 
-VERSION_IN_HEADER = /v[\d\.]+/
+VERSION_IN_HEADER = /v(\d|\.\d)+/
 VERSION_IN_URL = /\/(v\d[^\/]*)/
 
 
@@ -85,7 +85,8 @@ ApiExample.prototype.guessedVersionFromURL = ->
 
 ApiExample.prototype.guessedVersionAcceptHeader = ->
   return null unless @requestHeaders['accept']?
-  @requestHeaders['accept'].match(VERSION_IN_HEADER)
+  matches = @requestHeaders['accept'].match(VERSION_IN_HEADER)
+  matches[0] if matches?
 
 ApiExample.prototype.parsedUrl = ->
   url.parse(@url, true)
