@@ -21,9 +21,9 @@ describe 'ApiExample', ->
         method: 'PUT'
         headers:
           host: 'api_though.io'
-          "x-api-through-desc": 'shows a list of users'
-          "x-api-through-version": 'v1'
-          "x-api-through-resource": 'user'
+          "x-spy-rest-desc": 'shows a list of users'
+          "x-spy-rest-version": 'v1'
+          "x-spy-rest-resource": 'user'
 
       apiExample.populateFromRequest(request)
 
@@ -116,11 +116,11 @@ describe 'ApiExample', ->
         expect(apiExample.version).toEqual("v2")
 
 
-    describe 'when version is given through x-api-through-version header', ->
+    describe 'when version is given through x-spy-rest-version header', ->
       it 'overlooks URL and Accept header', ->
         apiExample.populateFromRequest
           headers:
-            "x-api-through-version": "v1"
+            "x-spy-rest-version": "v1"
             "accept": "application/vnd.github.v3.1+json"
           url: "/v2/users"
 
@@ -163,11 +163,11 @@ describe 'ApiExample', ->
 
       expect(apiExample.resource).toEqual("users")
 
-    it 'overlooks the url in case the x-api-through-resource header is present', ->
+    it 'overlooks the url in case the x-spy-rest-resource header is present', ->
       apiExample.populateFromRequest
         url: '/users/10/100/1000'
         headers:
-          "x-api-through-resource": 'person'
+          "x-spy-rest-resource": 'person'
 
       expect(apiExample.resource).toEqual("person")
 
@@ -176,7 +176,7 @@ describe 'ApiExample', ->
       apiExample.populateFromRequest
         url: '/users?page=1'
         headers:
-          "x-api-through-resource": 'person'
+          "x-spy-rest-resource": 'person'
 
       expect(apiExample.query).toEqual({page: '1'})
 
