@@ -72,14 +72,11 @@ ApiExample.prototype.saveWithErrorLog =   ->
     console.log("Failed to save because of error", error) if error
 
 ApiExample.prototype.guessedVersion = ->
-  console.log "@guessedVersionFromURL() = #{@guessedVersionFromURL()}"
-  console.log "@guessedVersionAcceptHeader() = #{@guessedVersionAcceptHeader()}"
   @guessedVersionFromURL() || @guessedVersionAcceptHeader()
 
 ApiExample.prototype.guessedVersionFromURL = ->
   return null unless @url?
 
-  console.log("@url = #{@url}")
   RegExp.$1 if @url.match(VERSION_IN_URL)
 
 
