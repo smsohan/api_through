@@ -23,9 +23,13 @@ class ApiThrough
 
   onError: (ctx, err)->
     console.error('proxy error:', err)
+    console.error('proxy error stack:', err.stack)
 
   onRequest: (ctx, callback)->
     ApiExample = require('./api_example')
+
+    ctx.onError (ctx, err) => @onError(ctx, err)
+
 
     apiExample = new ApiExample()
     apiExample.populateFromRequest(ctx.clientToProxyRequest)
