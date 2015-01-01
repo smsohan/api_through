@@ -43,6 +43,9 @@ ApiExamplesSchema = new mongoose.Schema
     responseBody:
       type: String
       default: ''
+    recordedAt:
+      type: Date
+      default: -> new Date()
   ,
     collection: 'api_examples'
 
