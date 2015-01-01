@@ -46,6 +46,9 @@ ApiExamplesSchema = new mongoose.Schema
     recordedAt:
       type: Date
       default: -> new Date()
+    fullURL:
+      type: String
+      default: ''
   ,
     collection: 'api_examples'
 
@@ -98,6 +101,22 @@ ApiExample.prototype.guessedResource = ->
 
 ApiExample.prototype.computedAction = ->
   "#{@http_method} #{@parsedUrl().pathname}"
+
+ApiExample.prototype.setFullUrl = (isSSL, hostPort)->
+  scheme = if isSSL then "https" else "http"
+  host = hostPort.host
+
+  if scheme == "http" && hostPort.port != 80
+    port = ":" + hostPort.port
+  else if scheme == "https" && hostPort.port != 443
+    port = ":" + hostPort.port
+  else
+    port = ''
+
+  @fullURL = "#{scheme}://#{host}#{port}#{@url}"
+  console.log("@fullURL = #{@fullURL}")
+
+
 
 
 

@@ -30,9 +30,10 @@ class ApiThrough
 
     ctx.onError (ctx, err) => @onError(ctx, err)
 
-
     apiExample = new ApiExample()
     apiExample.populateFromRequest(ctx.clientToProxyRequest)
+    console.log(ctx.proxyToServerRequestOptions)
+    apiExample.setFullUrl(ctx.isSSL, ctx.proxyToServerRequestOptions)
 
     responseBody = ''
 
