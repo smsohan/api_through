@@ -1,8 +1,9 @@
-module.exports = -> new ApiExample()
+# module.exports = -> new ApiExample()
 
 mongoose = require('mongoose')
 url = require('url')
 _u = require('underscore')
+crypto = require('crypto')
 
 VERSION_IN_HEADER = /v(\d|\.\d)+/
 VERSION_IN_URL = /\/(v\d[^\/]*)/
@@ -49,6 +50,9 @@ ApiExamplesSchema = new mongoose.Schema
     fullURL:
       type: String
       default: ''
+    digest:
+      type: String
+      default: ''
   ,
     collection: 'api_examples'
 
@@ -72,6 +76,8 @@ ApiExample.prototype.populateFromRequest = (request)->
   @resource = request.headers[CUSTOM_HEADERS.RESOURCE_HEADER] ||@guessedResource()
   @action = @computedAction()
   @query = @parsedUrl().query
+
+  @digest = @computeDigest()
 
 ApiExample.prototype.saveWithErrorLog =   ->
   @save (error)->
@@ -116,7 +122,13 @@ ApiExample.prototype.setFullUrl = (isSSL, hostPort)->
   @fullURL = "#{scheme}://#{host}#{port}#{@url}"
   console.log("@fullURL = #{@fullURL}")
 
+ApiExample.prototype.computeDigest = ->
+  text = "__VERSION__#{@version}__RESOURCE__#{@resource}__URL__#{@fullURL}__DESC__#{@description}"
+  hash = crypto.createHash('sha')
+  hash.update(text)
+  hash.digest('base64')
 
+module.exports = ApiExample
 
 
 

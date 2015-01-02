@@ -32,7 +32,6 @@ class ApiThrough
 
     apiExample = new ApiExample()
     apiExample.populateFromRequest(ctx.clientToProxyRequest)
-    console.log(ctx.proxyToServerRequestOptions)
     apiExample.setFullUrl(ctx.isSSL, ctx.proxyToServerRequestOptions)
 
     responseBody = ''
@@ -40,7 +39,21 @@ class ApiThrough
     responseAggregator = new PassThrough()
     responseAggregator.on 'finish', ->
       apiExample.responseBody = responseBody
-      apiExample.saveWithErrorLog()
+
+      apiExampleRaw = apiExample.toObject()
+      delete apiExampleRaw._id
+
+      ApiExample.findOneAndUpdate
+          digest: apiExample.digest
+        ,
+          apiExampleRaw
+        ,
+          upsert: true
+        ,
+          (error) ->
+            console.log("Failed to save due to error", error) if error?
+
+      # apiExample.saveWithErrorLog()
 
     ctx.addResponseFilter(responseAggregator)
 
@@ -53,8 +66,6 @@ class ApiThrough
       apiExample.statusCode = ctx.serverToProxyResponse.statusCode
 
       ctx.serverToProxyResponse.on "finish", -> console.log("FINISH")
-
-      apiExample.saveWithErrorLog()
       callback()
 
     ctx.onResponseData (ctx, chunk, callback)->
