@@ -4,6 +4,8 @@ PassThrough = require('stream').PassThrough
 
 class ApiThrough
   Proxy = require('http-mitm-proxy')
+  SSLCert = require('./ssl_cert')
+  fs = require('fs')
 
   constructor: ->
     mongooose = require('mongoose')
@@ -15,11 +17,26 @@ class ApiThrough
   start: ->
     proxy = new Proxy()
     proxy.use(@)
+    proxy.onCertificateMissing = (ctx, files, callback)=>
+      @onCertificateMissing(ctx, files, callback)
+
     proxy.listen
       port: process.env['PROXY_PORT'] || 9081
       sslCertCacheDir: './scripts/certs/http-mitm-proxy'
 
     @proxy = proxy
+
+  onCertificateMissing: (ctx, files, callback)->
+    console.log('Looking for "%s" certificates',   ctx.hostname)
+    console.log('"%s" missing', ctx.files.keyFile)
+    console.log('"%s" missing', ctx.files.certFile)
+
+    sslCert = new SSLCert(ctx.hostname)
+
+    sslCert.create =>
+      callback null,
+        keyFileData: fs.readFileSync(ctx.files.keyFile)
+        certFileData: fs.readFileSync(ctx.files.certFile)
 
   onError: (ctx, err)->
     console.error('proxy error:', err)
