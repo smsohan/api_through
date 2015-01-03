@@ -16,7 +16,7 @@ class SSLCert
     certScript.stderr.on 'data', (data)->
       console.log('stderr: ' + data)
 
-    certScript.on 'exit', (code)->
+    certScript.on 'exit', (code)=>
       console.log("Exited with code #{code}")
       if code != 0
         throw new Error("Problem with cert generation for #{@api_host}")
