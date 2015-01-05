@@ -45,7 +45,7 @@ ApiExamplesSchema = new mongoose.Schema
       type: String
       default: ''
     strippedResponseBody:
-      type: Object
+      type: String
       default: ''
     recordedAt:
       type: Date
@@ -86,7 +86,7 @@ ApiExample.prototype.stripResponseBody = ->
   StrippedObject = require('./stripped_object')
   strippedObject = new StrippedObject()
 
-  @strippedResponseBody = strippedObject.strip(JSON.parse(@responseBody))
+  @strippedResponseBody = JSON.stringify(strippedObject.strip(JSON.parse(@responseBody)))
 
 ApiExample.prototype.saveWithErrorLog =   ->
   @save (error)->
