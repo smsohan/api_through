@@ -44,6 +44,9 @@ ApiExamplesSchema = new mongoose.Schema
     responseBody:
       type: String
       default: ''
+    strippedResponseBody:
+      type: Object
+      default: ''
     recordedAt:
       type: Date
       default: -> new Date()
@@ -78,6 +81,12 @@ ApiExample.prototype.populateFromRequest = (request)->
   @query = @parsedUrl().query
 
   @digest = @computeDigest()
+
+ApiExample.prototype.stripResponseBody = ->
+  StrippedObject = require('./stripped_object')
+  strippedObject = new StrippedObject()
+
+  @strippedResponseBody = strippedObject.strip(JSON.parse(@responseBody))
 
 ApiExample.prototype.saveWithErrorLog =   ->
   @save (error)->

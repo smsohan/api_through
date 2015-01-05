@@ -57,6 +57,10 @@ class ApiThrough
     responseAggregator.on 'finish', ->
       apiExample.responseBody = responseBody
 
+      apiExample.stripResponseBody()
+
+      console.log(apiExample.strippedResponseBody)
+
       apiExampleRaw = apiExample.toObject()
       delete apiExampleRaw._id
 
@@ -69,8 +73,6 @@ class ApiThrough
         ,
           (error) ->
             console.log("Failed to save due to error", error) if error?
-
-      # apiExample.saveWithErrorLog()
 
     ctx.addResponseFilter(responseAggregator)
 
