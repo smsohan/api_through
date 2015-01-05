@@ -4,7 +4,8 @@
   "description": "A mitm proxy module to capture Web API traffic",
   "main": "index.js",
   "scripts": {
-    "test": "grunt jasmine_node"
+    "test": "grunt jasmine_node",
+    "start": "PROXY_PORT=9080 node index.js"
   },
   "author": "S M Sohan",
   "license": "MIT",
