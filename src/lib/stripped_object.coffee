@@ -7,7 +7,7 @@ class StrippedObject
       return objectToStrip
 
     if _u.isArray(objectToStrip)
-      return objectToStrip[0..1]
+      return _u.map objectToStrip[0..1], (itemToStrip) => @strip(itemToStrip)
 
     stripped = {}
 
