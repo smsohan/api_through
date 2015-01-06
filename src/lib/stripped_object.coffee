@@ -9,14 +9,10 @@ class StrippedObject
     if _u.isArray(objectToStrip)
       return _u.map objectToStrip[0..1], (itemToStrip) => @strip(itemToStrip)
 
-    stripped = {}
-
-    _u.each objectToStrip, (value, key) =>
-      if _u.isObject(value)
+    _u.reduce objectToStrip, (stripped, value, key) =>
         stripped[key] = @strip(value)
-      else
-        stripped[key] = value
-
-    stripped
+        stripped
+      ,
+        {}
 
 module.exports = StrippedObject
