@@ -1,7 +1,9 @@
 describe 'StrippedObject', ->
+
   StrippedObject = require('../../lib/stripped_object')
+
   it 'strips the arrays to downto 2 elements only', ->
-    originalObject = 
+    originalObject =
       a:
         b: [
             c: [ 1, 2, 3]

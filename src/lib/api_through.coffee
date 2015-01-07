@@ -59,8 +59,6 @@ class ApiThrough
 
       apiExample.stripResponseBody()
 
-      console.log(apiExample.strippedResponseBody)
-
       apiExampleRaw = apiExample.toObject()
       delete apiExampleRaw._id
 

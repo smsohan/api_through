@@ -189,15 +189,15 @@ describe 'ApiExample', ->
       expect(apiExample.query).toEqual({page: '1'})
 
   describe '#digest', ->
-    it 'computes the digest based on description, resource, version and full url', ->
+    it 'computes the digest based on description, resource, version and url', ->
       apiExample.description = 'a'
       apiExample.resource = 'b'
       apiExample.version = 'v1'
-      apiExample.fullURL = 'https://p/q?a=1'
+      apiExample.url = '/p/q?a=1'
 
       digest = apiExample.computeDigest()
 
-      apiExample.fullURL = "https://p/q?a=2"
+      apiExample.url = "/p/q?a=2"
       digest_2 = apiExample.computeDigest()
 
       expect(digest).not.toEqual(digest_2)

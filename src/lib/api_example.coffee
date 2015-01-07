@@ -90,7 +90,7 @@ ApiExample.prototype.stripResponseBody = ->
 
 ApiExample.prototype.saveWithErrorLog =   ->
   @save (error)->
-    console.log("Failed to save because of error", error) if error
+    console.error("Failed to save because of error", error) if error
 
 ApiExample.prototype.guessedVersion = ->
   @guessedVersionFromURL() || @guessedVersionAcceptHeader()
@@ -129,11 +129,11 @@ ApiExample.prototype.setFullUrl = (isSSL, hostPort)->
     port = ''
 
   @fullURL = "#{scheme}://#{host}#{port}#{@url}"
-  console.log("@fullURL = #{@fullURL}")
 
 ApiExample.prototype.computeDigest = ->
-  text = "__VERSION__#{@version}__RESOURCE__#{@resource}__URL__#{@fullURL}__DESC__#{@description}"
+  text = "__VERSION__#{@version}__RESOURCE__#{@resource}__URL__#{@url}__DESC__#{@description}"
   hash = crypto.createHash('sha')
+  console.log("digest for text #{text}")
   hash.update(text)
   hash.digest('base64')
 
