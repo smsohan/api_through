@@ -25,8 +25,8 @@ namespace :deploy do
 
       within current_path do
         if last_packages
-          current_gemfile_lock = capture('sha256sum', 'package.json').strip.split.first
-          last_if current_gemfile_lock == packages
+          current_packages = capture('sha256sum', 'package.json').strip.split.first
+          if current_packages == last_packages
             puts "Copying the old Gemfile* since the contents are same"
             execute :cp, "--preserve=timestamps #{releases_path}/#{last_release_dir}/package.json", "."
           else
