@@ -5,3 +5,4 @@ db
 scripts/certs/http-mitm-proxy/ca/*.srl
 scripts/certs/http-mitm-proxy/*.pem
 scripts/certs/http-mitm-proxy/*.csr
+vendor/bundle
