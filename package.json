@@ -1,6 +1,6 @@
 {
   "name": "api_through",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A mitm proxy module to capture Web API traffic",
   "main": "index.js",
   "scripts": {
