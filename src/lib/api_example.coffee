@@ -81,6 +81,7 @@ ApiExample.prototype.populateFromRequest = (request)->
   @query = @parsedUrl().query
 
   @digest = @computeDigest()
+  @filterAuthHeaders()
 
 ApiExample.prototype.stripResponseBody = ->
   StrippedObject = require('./stripped_object')
@@ -129,6 +130,19 @@ ApiExample.prototype.setFullUrl = (isSSL, hostPort)->
     port = ''
 
   @fullURL = "#{scheme}://#{host}#{port}#{@url}"
+
+ApiExample.prototype.filterAuthHeaders = ->
+  @requestHeaders = _u.reduce @requestHeaders, (filteredHeaders, value, key) ->
+      if key == 'authorization'
+        filteredHeaders[key] = 'FILTERED'
+      else
+        filteredHeaders[key] = value
+
+      filteredHeaders
+    ,
+      {}
+
+
 
 ApiExample.prototype.computeDigest = ->
   text = "__VERSION__#{@version}__RESOURCE__#{@resource}__URL__#{@url}__DESC__#{@description}"
