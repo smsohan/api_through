@@ -56,6 +56,9 @@ ApiExamplesSchema = new mongoose.Schema
     digest:
       type: String
       default: ''
+    requiresAuth:
+      type: Boolean
+      default: false
   ,
     collection: 'api_examples'
 
@@ -132,9 +135,10 @@ ApiExample.prototype.setFullUrl = (isSSL, hostPort)->
   @fullURL = "#{scheme}://#{host}#{port}#{@url}"
 
 ApiExample.prototype.filterAuthHeaders = ->
-  @requestHeaders = _u.reduce @requestHeaders, (filteredHeaders, value, key) ->
+  @requestHeaders = _u.reduce @requestHeaders, (filteredHeaders, value, key) =>
       if key == 'authorization'
         filteredHeaders[key] = 'FILTERED'
+        @requiresAuth = true
       else
         filteredHeaders[key] = value
 
