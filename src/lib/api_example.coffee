@@ -89,8 +89,10 @@ ApiExample.prototype.populateFromRequest = (request)->
 ApiExample.prototype.stripResponseBody = ->
   StrippedObject = require('./stripped_object')
   strippedObject = new StrippedObject()
-
-  @strippedResponseBody = JSON.stringify(strippedObject.strip(JSON.parse(@responseBody)))
+  try
+    @strippedResponseBody = JSON.stringify(strippedObject.strip(JSON.parse(@responseBody)))
+  catch
+    @strippedResponseBody = @responseBody
 
 ApiExample.prototype.saveWithErrorLog =   ->
   @save (error)->
