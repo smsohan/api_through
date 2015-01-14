@@ -20,6 +20,7 @@ ApiExamplesSchema = new mongoose.Schema
       type: String
     version:
       type: String
+      default: 'Default'
     resource:
       type: String
     action:
@@ -78,7 +79,7 @@ ApiExample.prototype.populateFromRequest = (request)->
   @requestHeaders = request.headers
 
   @description = request.headers[CUSTOM_HEADERS.DESC_HEADER]
-  @version = request.headers[CUSTOM_HEADERS.VERSION_HEADER] || @guessedVersion()
+  @version = request.headers[CUSTOM_HEADERS.VERSION_HEADER] || @guessedVersion() || 'Default'
   @resource = request.headers[CUSTOM_HEADERS.RESOURCE_HEADER] ||@guessedResource()
   @action = @computedAction()
   @query = @parsedUrl().query
