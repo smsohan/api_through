@@ -8,12 +8,11 @@ crypto = require('crypto')
 VERSION_IN_HEADER = /v(\d|\.\d)+/
 VERSION_IN_URL = /\/(v\d[^\/]*)/
 
-
 CUSTOM_HEADERS =
   DESC_HEADER: "x-spy-rest-desc"
   VERSION_HEADER: "x-spy-rest-version"
   RESOURCE_HEADER: "x-spy-rest-resource"
-
+  API_TOKEN_HEADER: "x-spy-rest-api-token"
 
 ApiExamplesSchema = new mongoose.Schema
     description:
@@ -60,6 +59,9 @@ ApiExamplesSchema = new mongoose.Schema
     requiresAuth:
       type: Boolean
       default: false
+    api_token:
+      type: String
+      default: ''
   ,
     collection: 'api_examples'
 
@@ -85,6 +87,7 @@ ApiExample.prototype.populateFromRequest = (request)->
   @query = @parsedUrl().query
 
   @digest = @computeDigest()
+  @api_token = @requestHeaders[CUSTOM_HEADERS.API_TOKEN_HEADER]
   @filterAuthHeaders()
 
 ApiExample.prototype.stripResponseBody = ->
