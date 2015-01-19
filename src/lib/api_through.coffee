@@ -44,6 +44,7 @@ class ApiThrough
 
   onRequest: (ctx, callback)->
     ApiExample = require('./api_example')
+    User = require('./user')
 
     ctx.onError (ctx, err) => @onError(ctx, err)
 
@@ -56,21 +57,24 @@ class ApiThrough
     responseAggregator = new PassThrough()
     responseAggregator.on 'finish', ->
       apiExample.responseBody = responseBody
-
       apiExample.stripResponseBody()
 
-      apiExampleRaw = apiExample.toObject()
-      delete apiExampleRaw._id
+      User.findOne {api_token: apiExample.apiToken}, (err, user)->
+        console.log('findOne', err, user)
+        apiExample.userId = user.id if user
 
-      ApiExample.findOneAndUpdate
-          digest: apiExample.digest
-        ,
-          apiExampleRaw
-        ,
-          upsert: true
-        ,
-          (error) ->
-            console.log("Failed to save due to error", error) if error?
+        apiExampleRaw = apiExample.toObject()
+        delete apiExampleRaw._id
+
+        ApiExample.findOneAndUpdate
+            digest: apiExample.digest
+          ,
+            apiExampleRaw
+          ,
+            upsert: true
+          ,
+            (error) ->
+              console.log("Failed to save due to error", error) if error?
 
     ctx.addResponseFilter(responseAggregator)
 

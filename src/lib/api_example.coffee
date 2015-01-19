@@ -62,6 +62,9 @@ ApiExamplesSchema = new mongoose.Schema
     apiToken:
       type: String
       default: ''
+    userId:
+      type: mongoose.Schema.Types.ObjectId
+      default: null
   ,
     collection: 'api_examples'
 
@@ -151,7 +154,6 @@ ApiExample.prototype.filterAuthHeaders = ->
       filteredHeaders
     ,
       {}
-
 
 
 ApiExample.prototype.computeDigest = ->
