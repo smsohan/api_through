@@ -59,7 +59,7 @@ ApiExamplesSchema = new mongoose.Schema
     requiresAuth:
       type: Boolean
       default: false
-    api_token:
+    apiToken:
       type: String
       default: ''
   ,
@@ -87,7 +87,7 @@ ApiExample.prototype.populateFromRequest = (request)->
   @query = @parsedUrl().query
 
   @digest = @computeDigest()
-  @api_token = @requestHeaders[CUSTOM_HEADERS.API_TOKEN_HEADER]
+  @apiToken = @requestHeaders[CUSTOM_HEADERS.API_TOKEN_HEADER]
   @filterAuthHeaders()
 
 ApiExample.prototype.stripResponseBody = ->
