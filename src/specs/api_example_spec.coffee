@@ -204,10 +204,10 @@ describe 'ApiExample', ->
 
   describe '#templatizeURL', ->
     it 'doesnt templatize unless there is a number of uuid', ->
-      apiExample.url = '/products/all'
+      apiExample.url = '/products/all?hello=world'
       apiExample.templatizeURL()
 
-      expect(apiExample.templatedURL).toEqual(apiExample.url)
+      expect(apiExample.templatedURL).toEqual('/products/all')
 
     it 'templatizes numbers in the path', ->
       apiExample.url = '/products/123'

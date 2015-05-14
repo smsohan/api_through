@@ -169,7 +169,7 @@ ApiExample.prototype.computeDigest = ->
   hash.digest('base64')
 
 ApiExample.prototype.templatizeURL = ->
-  path = @parsedUrl().path
+  path = @parsedUrl().pathname
 
   parts = path.split("/")
 
