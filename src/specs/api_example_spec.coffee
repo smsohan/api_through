@@ -222,6 +222,12 @@ describe 'ApiExample', ->
 
       expect(apiExample.templatedURL).toEqual('/products/{:product-uuid}')
 
+    it 'does not templatize if consecutive numbers appear', ->
+      apiExample.url = '/products/10/10'
+      apiExample.templatizeURL()
+
+      expect(apiExample.templatedURL).toEqual('/products/{:product-id}/10')
+
 
 
 
