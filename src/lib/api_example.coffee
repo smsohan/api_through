@@ -4,6 +4,8 @@ mongoose = require('mongoose')
 url = require('url')
 _u = require('underscore')
 crypto = require('crypto')
+validator = require('validator')
+inflector = require('i')()
 
 VERSION_IN_HEADER = /v(\d|\.\d)+/
 VERSION_IN_URL = /\/(v\d[^\/]*)/
@@ -25,6 +27,8 @@ ApiExamplesSchema = new mongoose.Schema
     action:
       type: String
     url:
+      type: String
+    templatedURL:
       type: String
     query:
       type: Object
@@ -92,6 +96,7 @@ ApiExample.prototype.populateFromRequest = (request)->
   @digest = @computeDigest()
   @apiToken = @requestHeaders[CUSTOM_HEADERS.API_TOKEN_HEADER]
   @filterAuthHeaders()
+  @templatizeURL()
 
 ApiExample.prototype.stripResponseBody = ->
   StrippedObject = require('./stripped_object')
@@ -162,6 +167,26 @@ ApiExample.prototype.computeDigest = ->
   console.log("digest for text #{text}")
   hash.update(text)
   hash.digest('base64')
+
+ApiExample.prototype.templatizeURL = ->
+  path = @parsedUrl().path
+
+  parts = path.split("/")
+
+  templatedParts = _u.map parts, (part, index) ->
+    previousPart = if index > 0 then parts[index-1] else ''
+
+    return part unless validator.isAlpha(previousPart)
+
+    if validator.isNumeric(part)
+      "{:#{inflector.singularize(previousPart)}-id}"
+    else if validator.isUUID(part)
+      "{:#{inflector.singularize(previousPart)}-uuid}"
+    else
+      part
+
+  @templatedURL = templatedParts.join('/')
+
 
 module.exports = ApiExample
 

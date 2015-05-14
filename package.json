@@ -12,7 +12,9 @@
   "dependencies": {
     "http-mitm-proxy": "smsohan/node-http-mitm-proxy#master",
     "mongoose": "^3.8",
-    "underscore": "1.7"
+    "underscore": "1.7",
+    "validator": "3.39.0",
+    "i": "0.3.3"
   },
   "devDependencies": {
     "grunt": "^0.4.5",

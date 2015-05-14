@@ -202,6 +202,26 @@ describe 'ApiExample', ->
 
       expect(digest).not.toEqual(digest_2)
 
+  describe '#templatizeURL', ->
+    it 'doesnt templatize unless there is a number of uuid', ->
+      apiExample.url = '/products/all'
+      apiExample.templatizeURL()
+
+      expect(apiExample.templatedURL).toEqual(apiExample.url)
+
+    it 'templatizes numbers in the path', ->
+      apiExample.url = '/products/123'
+      apiExample.templatizeURL()
+
+      expect(apiExample.templatedURL).toEqual('/products/{:product-id}')
+
+
+    it 'templatizes uuids in the path', ->
+      apiExample.url = '/products/15d14df3-46ca-42b2-a687-49a9cb000c30'
+      apiExample.templatizeURL()
+
+      expect(apiExample.templatedURL).toEqual('/products/{:product-uuid}')
+
 
 
 
