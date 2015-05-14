@@ -90,13 +90,13 @@ ApiExample.prototype.populateFromRequest = (request)->
   @description = request.headers[CUSTOM_HEADERS.DESC_HEADER]
   @version = request.headers[CUSTOM_HEADERS.VERSION_HEADER] || @guessedVersion() || 'Default'
   @resource = request.headers[CUSTOM_HEADERS.RESOURCE_HEADER] ||@guessedResource()
-  @action = @computedAction()
   @query = @parsedUrl().query
 
   @digest = @computeDigest()
   @apiToken = @requestHeaders[CUSTOM_HEADERS.API_TOKEN_HEADER]
   @filterAuthHeaders()
   @templatizeURL()
+  @action = @computedAction()
 
 ApiExample.prototype.stripResponseBody = ->
   StrippedObject = require('./stripped_object')
@@ -133,7 +133,7 @@ ApiExample.prototype.guessedResource = ->
   possibleResource.split('.')[0] if possibleResource?
 
 ApiExample.prototype.computedAction = ->
-  "#{@http_method} #{@parsedUrl().pathname}"
+  "#{@http_method} #{@templatedURL}"
 
 ApiExample.prototype.setFullUrl = (isSSL, hostPort)->
   scheme = if isSSL then "https" else "http"
