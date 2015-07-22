@@ -1,4 +1,4 @@
-FROM dockerfile/node
+FROM node
 
 MAINTAINER sohan39@gmail.com
 
