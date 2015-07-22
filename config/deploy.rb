@@ -19,7 +19,7 @@ namespace :deploy do
         last_release = capture('ls', '-al | tail -2 | head -1')
         if last_release
           last_release_dir = last_release.strip.split.last
-          last_packages = capture('sha256sum', last_release_dir + '/package.json').strip.split.first
+          last_packages = begin; capture('sha256sum', last_release_dir + '/package.json').strip.split.first; rescue; ''; end
         end
       end
 
