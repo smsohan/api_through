@@ -8,7 +8,7 @@ class SSLCert
 
     spawn = require('child_process').spawn
     scriptFile = require('path').join(__dirname, '..', 'scripts', 'host.sh');
-    certScript = spawn(scriptFile, [@api_host], process.cwd() + '/scripts');
+    certScript = spawn(scriptFile, [@api_host], {cwd: process.cwd() + '/scripts'});
 
     certScript.stdout.on 'data', (data)->
       console.log('stdout: ' + data)
