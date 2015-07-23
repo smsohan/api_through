@@ -1,4 +1,4 @@
-FROM node
+FROM node:0.12.3
 
 MAINTAINER sohan39@gmail.com
 
