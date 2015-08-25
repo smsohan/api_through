@@ -228,6 +228,12 @@ describe 'ApiExample', ->
 
       expect(apiExample.templatedURL).toEqual('/products/{:product-id}/10')
 
+  describe '#filteredUrl', ->
+    it 'filters the API key from the URL', ->
+      filteredUrl = apiExample.filteredUrl('/a/x?api_key=something')
+      expect(filteredUrl).toEqual('/a/x?api_key=FILTERED')
+
+
 
 
 

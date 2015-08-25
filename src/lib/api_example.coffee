@@ -82,7 +82,7 @@ ApiExample = mongoose.model 'ApiExample', ApiExamplesSchema
 
 ApiExample.prototype.populateFromRequest = (request)->
   @host = request.headers.host
-  @url = request.url
+  @url = @filteredUrl(request.url)
   @http_method = request.method
 
   @requestHeaders = request.headers
@@ -159,6 +159,18 @@ ApiExample.prototype.filterAuthHeaders = ->
       filteredHeaders
     ,
       {}
+
+ApiExample.prototype.filteredUrl = (rawUrl)->
+  return rawUrl if !rawUrl
+
+  parasedRawUrl = url.parse(rawUrl, true)
+  api_key_param = _u.find _u.keys(parasedRawUrl.query), (param) ->
+    param.toLowerCase() == 'api_key'
+
+  return rawUrl if !api_key_param
+
+  rawUrl.replace("#{api_key_param}=#{parasedRawUrl.query[api_key_param]}", "#{api_key_param}=FILTERED")
+
 
 
 ApiExample.prototype.computeDigest = ->
