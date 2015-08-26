@@ -233,6 +233,16 @@ describe 'ApiExample', ->
       filteredUrl = apiExample.filteredUrl('/a/x?api_key=something')
       expect(filteredUrl).toEqual('/a/x?api_key=FILTERED')
 
+  describe '#host', ->
+    it 'overrides the host based on a x-spy-rest-host', ->
+      apiExample.populateFromRequest
+        headers:
+          "x-spy-rest-host": "some.host"
+        host: 'real.host'
+        url: '/a'
+        params: {}
+
+      expect(apiExample.host).toEqual('some.host')
 
 
 

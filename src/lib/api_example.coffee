@@ -15,6 +15,7 @@ CUSTOM_HEADERS =
   VERSION_HEADER: "x-spy-rest-version"
   RESOURCE_HEADER: "x-spy-rest-resource"
   API_TOKEN_HEADER: "x-spy-rest-api-token"
+  HOST_HEADER: 'x-spy-rest-host'
 
 ApiExamplesSchema = new mongoose.Schema
     description:
@@ -81,7 +82,7 @@ ApiExamplesSchema.index
 ApiExample = mongoose.model 'ApiExample', ApiExamplesSchema
 
 ApiExample.prototype.populateFromRequest = (request)->
-  @host = request.headers.host
+  @host = request.headers[CUSTOM_HEADERS.HOST_HEADER] || request.headers.host
   @url = @filteredUrl(request.url)
   @http_method = request.method
 
