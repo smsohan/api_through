@@ -93,11 +93,11 @@ ApiExample.prototype.populateFromRequest = (request)->
   @resource = request.headers[CUSTOM_HEADERS.RESOURCE_HEADER] ||@guessedResource()
   @query = @parsedUrl().query
 
-  @digest = @computeDigest()
   @apiToken = @requestHeaders[CUSTOM_HEADERS.API_TOKEN_HEADER]
   @filterAuthHeaders()
   @templatizeURL()
   @action = @computedAction()
+  @digest = @computeDigest()
 
 ApiExample.prototype.stripResponseBody = ->
   StrippedObject = require('./stripped_object')
@@ -175,7 +175,7 @@ ApiExample.prototype.filteredUrl = (rawUrl)->
 
 
 ApiExample.prototype.computeDigest = ->
-  text = "__VERSION__#{@version}__RESOURCE__#{@resource}__URL__#{@url}__DESC__#{@description}"
+  text = "__VERSION__#{@version}__RESOURCE__#{@resource}__URL__#{@action}__DESC__#{@description}"
   hash = crypto.createHash('sha')
   console.log("digest for text #{text}")
   hash.update(text)

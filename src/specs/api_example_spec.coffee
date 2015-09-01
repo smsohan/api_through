@@ -193,11 +193,11 @@ describe 'ApiExample', ->
       apiExample.description = 'a'
       apiExample.resource = 'b'
       apiExample.version = 'v1'
-      apiExample.url = '/p/q?a=1'
+      apiExample.action = '/p/q'
 
       digest = apiExample.computeDigest()
 
-      apiExample.url = "/p/q?a=2"
+      apiExample.action = "/p/r"
       digest_2 = apiExample.computeDigest()
 
       expect(digest).not.toEqual(digest_2)
