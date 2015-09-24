@@ -5,10 +5,11 @@ set :repo_url, 'git@github.com:smsohan/api_through.git'
 
 set :linked_dirs, ['secrets', 'node_modules']
 SSHKit.config.command_map[:build_and_run] = "#{current_path}/build_and_run.sh"
+set :use_docker, fetch(:use_docker, true)
 
 namespace :deploy do
 
-  task docker: :finished do
+  task :docker do
     on roles(:app) do
 
       last_packages = nil
@@ -43,7 +44,7 @@ namespace :deploy do
     end
   end
 
-  task standalone: :finished do
+  task :standalone do
     on roles(:app) do
       within current_path do
         execute :npm, "install"
@@ -52,5 +53,15 @@ namespace :deploy do
       end
     end
   end
+
+  task :restart do
+    if fetch(:use_docker)
+      invoke 'docker'
+    else
+      invoke 'standalone'
+    end
+  end
+
+  after :finished, 'deploy:restart'
 
 end
