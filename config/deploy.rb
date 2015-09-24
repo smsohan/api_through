@@ -56,9 +56,9 @@ namespace :deploy do
 
   task :restart do
     if fetch(:use_docker)
-      invoke 'docker'
+      invoke 'deploy:docker'
     else
-      invoke 'standalone'
+      invoke 'deploy:standalone'
     end
   end
 
