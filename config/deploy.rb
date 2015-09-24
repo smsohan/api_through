@@ -6,6 +6,8 @@ set :repo_url, 'git@github.com:smsohan/api_through.git'
 set :linked_dirs, ['secrets', 'node_modules']
 SSHKit.config.command_map[:build_and_run] = "#{current_path}/build_and_run.sh"
 
+set :use_docker, fetch(:use_docker, true)
+
 namespace :deploy do
 
   task :build_and_run do
@@ -50,6 +52,10 @@ namespace :deploy do
     end
   end
 
-
-  # after :finished, :build_and_run
+  if fetch(:use_docker)
+    after :finished, :build_and_run
+  else
+    after :finished, :npm_install
+    after :npm_install, :restart
+  end
 end
