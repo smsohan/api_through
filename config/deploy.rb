@@ -6,12 +6,9 @@ set :repo_url, 'git@github.com:smsohan/api_through.git'
 set :linked_dirs, ['secrets', 'node_modules']
 SSHKit.config.command_map[:build_and_run] = "#{current_path}/build_and_run.sh"
 
-set :use_docker, fetch(:use_docker, true)
-
 namespace :deploy do
 
-  task :build_and_run do
-
+  task docker: :finished do
     on roles(:app) do
 
       last_packages = nil
@@ -46,23 +43,14 @@ namespace :deploy do
     end
   end
 
-  task :npm_install do
-    within current_path do
-      execute :npm, "install"
+  task standalone: :finished do
+    on roles(:app) do
+      within current_path do
+        execute :npm, "install"
+        execute 'svc -t /service/api_through'
+        execute 'svc -u /service/api_through'
+      end
     end
   end
 
-  task :restart do
-    execute 'svc -t /service/api_through'
-    execute 'svc -u /service/api_through'
-  end
-
-  if fetch(:use_docker)
-    puts "HERE"
-    after :finished, :build_and_run
-  else
-    puts "THERE"
-    after :finished, :npm_install
-    after :npm_install, :restart
-  end
 end
