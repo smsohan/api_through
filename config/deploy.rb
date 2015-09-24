@@ -58,8 +58,10 @@ namespace :deploy do
   end
 
   if fetch(:use_docker)
+    puts "HERE"
     after :finished, :build_and_run
   else
+    puts "THERE"
     after :finished, :npm_install
     after :npm_install, :restart
   end
