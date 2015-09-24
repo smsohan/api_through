@@ -52,6 +52,11 @@ namespace :deploy do
     end
   end
 
+  task :restart do
+    execute 'svc -t /service/api_through'
+    execute 'svc -u /service/api_through'
+  end
+
   if fetch(:use_docker)
     after :finished, :build_and_run
   else
