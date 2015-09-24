@@ -3,7 +3,7 @@ lock '3.3.5'
 set :application, 'api_through'
 set :repo_url, 'git@github.com:smsohan/api_through.git'
 
-set :linked_dirs, fetch(:linked_dirs, []).push('secrets')
+set :linked_dirs, ['secrets', 'node_modules']
 SSHKit.config.command_map[:build_and_run] = "#{current_path}/build_and_run.sh"
 
 namespace :deploy do
@@ -44,5 +44,12 @@ namespace :deploy do
     end
   end
 
-  after :finished, :build_and_run
+  task :npm_install do
+    within current_path do
+      execute :npm, "install"
+    end
+  end
+
+
+  # after :finished, :build_and_run
 end
