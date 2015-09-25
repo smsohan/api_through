@@ -9,11 +9,14 @@ set :use_docker, fetch(:use_docker, true)
 set :pty, true
 
 set :application_user, 'root'
+SSHKit.config.command_map.prefix[:chmod].push('sudo')
+
+Rake::Task['deploy:log_revision'].clear_actions
 
 module SSHKit
   class Command
     def user(&block)
-      "sudo -u #{fetch(:application_user)} #{environment_string + " " unless environment_string.empty?}-- sh -c '%s'" % %Q{#{yield}}
+      "sudo -E -u #{fetch(:application_user)} #{environment_string + " " unless environment_string.empty?}-- sh -c '%s'" % %Q{#{yield}}
     end
   end
 end
@@ -62,10 +65,10 @@ namespace :deploy do
     on roles(:app) do
       within current_path do
         execute :npm, "install"
-        with path: '/usr/local/bin' do
-          as 'root' do
-            execute 'svc -t /service/api_through'
-            execute 'svc -u /service/api_through'
+        as :root do
+          with path: "/bin:/usr/bin:/usr/local/bin" do
+            execute :svc, '-t /service/api_through'
+            # execute :svc -u /service/api_through'
           end
         end
       end
@@ -80,6 +83,14 @@ namespace :deploy do
     end
   end
 
+  task :hack do
+    on roles(:app) do
+      execute :mkdir, "-p /tmp/#{fetch(:application)}"
+      execute :chmod, "a+w /tmp/#{fetch(:application)}"
+    end
+  end
+
   after :finished, 'deploy:restart'
+  before :starting, 'deploy:hack'
 
 end
