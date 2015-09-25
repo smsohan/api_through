@@ -83,14 +83,6 @@ namespace :deploy do
     end
   end
 
-  task :hack do
-    on roles(:app) do
-      execute :mkdir, "-p /tmp/#{fetch(:application)}"
-      execute :chmod, "a+w /tmp/#{fetch(:application)}"
-    end
-  end
-
   after :finished, 'deploy:restart'
-  before :starting, 'deploy:hack'
 
 end
