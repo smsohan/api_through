@@ -1,13 +1,30 @@
 lock '3.3.5'
 
+set :proxy_user, 'rails'
+
+module SSHKit
+  class Command
+    def user(&block)
+      "sudo -- sh -c '%s'" % %Q{#{yield}}
+    end
+  end
+end
+
 set :application, 'api_through'
-set :repo_url, 'git@github.com:smsohan/api_through.git'
+set :repo_url, 'https://github.com/smsohan/api_through.git'
 
 set :linked_dirs, ['secrets', 'node_modules']
 SSHKit.config.command_map[:build_and_run] = "#{current_path}/build_and_run.sh"
 set :use_docker, fetch(:use_docker, true)
 
+set :tmp_dir, File.join(fetch(:tmp_dir), ENV['SSH_USER'])
+
+Rake::Task['deploy:log_revision'].clear_actions
+
 namespace :deploy do
+
+  task :log_revision do
+  end
 
   task :docker do
     on roles(:app) do
@@ -48,8 +65,8 @@ namespace :deploy do
     on roles(:app) do
       within current_path do
         execute :npm, "install"
-        execute 'svc -t /service/api_through'
-        execute 'svc -u /service/api_through'
+        execute 'sudo svc -t /service/api_through'
+        execute 'sudo svc -u /service/api_through'
       end
     end
   end
@@ -65,3 +82,13 @@ namespace :deploy do
   after :finished, 'deploy:restart'
 
 end
+
+task :change_permission_on_wrapper do
+  on roles(:app) do
+    execute "sudo chown -R #{ENV['SSH_USER']}:#{ENV['SSH_USER']} /tmp/#{fetch(:application)}"
+  end
+end
+
+
+# before "git:wrapper", "change_permission_on_wrapper"
+

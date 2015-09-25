@@ -11,7 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "http-mitm-proxy": "smsohan/node-http-mitm-proxy#master",
-    "mongoose": "^3.8",
+    "mongoose": "^4.1",
     "underscore": "1.7",
     "validator": "3.39.0",
     "i": "0.3.3"
