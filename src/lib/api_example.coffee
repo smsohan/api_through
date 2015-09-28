@@ -16,6 +16,7 @@ CUSTOM_HEADERS =
   RESOURCE_HEADER: "x-spy-rest-resource"
   API_TOKEN_HEADER: "x-spy-rest-api-token"
   HOST_HEADER: 'x-spy-rest-host'
+  NO_STRIP_HEADER: 'x-spy-rest-no-strip'
 
 ApiExamplesSchema = new mongoose.Schema
     description:
@@ -100,6 +101,8 @@ ApiExample.prototype.populateFromRequest = (request)->
   @digest = @computeDigest()
 
 ApiExample.prototype.stripResponseBody = ->
+  return unless @shouldStrip()
+
   StrippedObject = require('./stripped_object')
   strippedObject = new StrippedObject()
   try
@@ -172,14 +175,17 @@ ApiExample.prototype.filteredUrl = (rawUrl)->
 
   rawUrl.replace("#{api_key_param}=#{parasedRawUrl.query[api_key_param]}", "#{api_key_param}=FILTERED")
 
-
-
 ApiExample.prototype.computeDigest = ->
   text = "__VERSION__#{@version}__RESOURCE__#{@resource}__URL__#{@action}__DESC__#{@description}"
   hash = crypto.createHash('sha')
   console.log("digest for text #{text}")
   hash.update(text)
   hash.digest('base64')
+
+
+ApiExample.prototype.shouldStrip = ->
+  strip_header_value = request.headers[CUSTOM_HEADERS.NO_STRIP_HEADER]
+  strip_header_value != 'false'
 
 ApiExample.prototype.templatizeURL = ->
   path = @parsedUrl().pathname
