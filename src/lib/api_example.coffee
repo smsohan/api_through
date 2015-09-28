@@ -52,7 +52,6 @@ ApiExamplesSchema = new mongoose.Schema
       default: ''
     strippedResponseBody:
       type: String
-      default: ''
     recordedAt:
       type: Date
       default: -> new Date()
@@ -184,7 +183,9 @@ ApiExample.prototype.computeDigest = ->
 
 
 ApiExample.prototype.shouldStrip = ->
-  strip_header_value = request.headers[CUSTOM_HEADERS.NO_STRIP_HEADER]
+  return true unless @requestHeaders
+  console.log("HERE")
+  strip_header_value = @requestHeaders[CUSTOM_HEADERS.NO_STRIP_HEADER]
   strip_header_value != 'false'
 
 ApiExample.prototype.templatizeURL = ->

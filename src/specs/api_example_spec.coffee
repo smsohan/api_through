@@ -244,9 +244,18 @@ describe 'ApiExample', ->
 
       expect(apiExample.host).toEqual('some.host')
 
+  describe '#stripResponseBody', ->
+    it 'removes the array items after the first two from the documentation', ->
+      apiExample.responseBody = JSON.stringify([1, 2, 3])
+      apiExample.stripResponseBody()
+      expect(apiExample.strippedResponseBody).toEqual(JSON.stringify([1, 2]))
 
-
-
+    it 'doesnt use the stripped if the header is set to false', ->
+      apiExample.requestHeaders =
+        "x-spy-rest-no-strip": 'false'
+      apiExample.responseBody = JSON.stringify([1, 2, 3])
+      apiExample.stripResponseBody()
+      expect(apiExample.strippedResponseBody).toEqual(undefined)
 
 
 
