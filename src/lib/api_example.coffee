@@ -186,7 +186,7 @@ ApiExample.prototype.shouldStrip = ->
   return true unless @requestHeaders
   console.log("HERE")
   strip_header_value = @requestHeaders[CUSTOM_HEADERS.NO_STRIP_HEADER]
-  strip_header_value != 'false'
+  strip_header_value != 'true'
 
 ApiExample.prototype.templatizeURL = ->
   path = @parsedUrl().pathname

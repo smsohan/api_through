@@ -252,7 +252,7 @@ describe 'ApiExample', ->
 
     it 'doesnt use the stripped if the header is set to false', ->
       apiExample.requestHeaders =
-        "x-spy-rest-no-strip": 'false'
+        "x-spy-rest-no-strip": 'true'
       apiExample.responseBody = JSON.stringify([1, 2, 3])
       apiExample.stripResponseBody()
       expect(apiExample.strippedResponseBody).toEqual(undefined)
